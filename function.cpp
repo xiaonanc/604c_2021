@@ -1,54 +1,70 @@
 #include "main.h"
+#include "function.hpp"
 
-
-void drivestraight(int power, int distance, char direction, float kp){
+//need to be tested
+//gyro_kp needs to be tuned
+//line 22 needs to be tuned
+void driveStraight(double target, double kp, double min, double range){
+  bool exit = false;
+  double start_time = millis();
+  double delta = 0;
   int error = 0;
-  resetSensors();
-  if(direction == 'f'){
-    while(leftPosition() <= distance ){
-      error = distance - leftPosition();
-      setPower(error*kp, 0);
-    }
-    stopAllMotors();
-  }
+  bool in_range = false;
+  double gyro_error = 0;
+  double gyro_kp = 0.1;
 
-  else if(direction == 'b'){
-    while(leftPosition() >= -distance ){
-      error = distance - leftPosition();
-      setPower(-error*kp, 0);
+  resetSensors();
+
+  while(exit == false){
+    in_range = fabs(leftPosition()) > (fabs(target) - fabs(range));
+    error = target - leftPosition();
+    gyro_error = -gyro.get_value();
+    setPower((error*kp) + min, gyro_error*gyro_kp);
+
+    if(in_range){
+      //the 250 need to be tuned
+      delta = millis() - start_time;
+      if(delta >= 250){
+        exit = true;
+      }
     }
-    stopAllMotors();
+    else{
+      start_time = millis();
+    }
   }
+  stopAllMotors();
 }
 
-void gyro_turn(int degree, char direction){
+//need to be tested
+//kp = 0.1 works
+//range = 46 works
+void gyro_turn(double target, double kp, double min, double range){
   resetSensors();
-  double kp = 0.1;
+  bool exit = false;
+  double start_time = millis();
+  double delta = 0;
   int error = 0;
-  int power = 0;
-  if(direction == 'L'){
-    while(gyro.get_value() <= degree){
-      error = -degree - gyro.get_value();
-      power = kp*power;
-      //need to tested
-      //leftFrontMotor = -power;
-      //leftBackMotor = -power;
-      //rightFrontMotor = -power;
-      //rightBackMotor = -power;
-      setPower(0, -power);
+  bool in_range = false;
+  double power = 0;
+
+  while(exit == false){
+    in_range = fabs(gyro.get_value()) > (fabs(target) - fabs(range));
+    error = target - gyro.get_value();
+    power = (kp*error) + min;
+    setPower(0, power);
+
+    if(in_range){
+      //delta needs to be tuned
+      delta = millis() - start_time;
+      if(delta > 250){
+        exit = true;
+      }
+    }
+    else{
+      start_time = millis();
     }
   }
-  else if(direction == 'R'){
-    while(gyro.get_value() >= degree){
-      error = degree + gyro.get_value();
-      power = -kp*power;
-      //leftFrontMotor = power;
-      //leftBackMotor = power;
-      //rightFrontMotor = power;
-      //rightBackMotor = power;
-      setPower(0, power);
-    }
-  }
+  stopAllMotors();
 }
 
 void shoot(int time){

@@ -1,7 +1,7 @@
 //604c_feb
 #include "main.h"
-#include "function.hpp"
 using namespace pros;
+
 Motor leftFrontMotor(20);
 Motor leftBackMotor(14);
 Motor rightFrontMotor(10);
@@ -38,11 +38,12 @@ void on_center_button() {
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-    gyro.reset();
+  gyro.reset();
+	delay(2000);
 	pros::lcd::initialize();
+
 	pros::lcd::set_text(1, "Hello PROS User!");
 
-	pros::lcd::register_btn1_cb(on_center_button);
 }
 
 /**
@@ -77,9 +78,9 @@ void competition_initialize() {}
 void autonomous() {
 	//intake(1);
 	//drivestraight(80, 2000, 'f' );
-	//drivestraight(50, 1260, 'f');
-	gyro_turn(3000, 'r');
-	drivestraight(50, 1260, 'f');
+
+	driveStraight(50, 1260, 'f', 0.1);
+
 //	delay(1000);
 //	intake(0);
 
@@ -103,17 +104,13 @@ void opcontrol() {
 	while(true){
 
 		lcd::print(1, "lfm_postion = &4.0f", leftFrontMotor.get_position());
+		lcd::print(2, "gyro_value = &4.0f", gyro.get_value());
 
 		int leftY = master.get_analog(ANALOG_LEFT_Y);
 	  int leftX = master.get_analog(ANALOG_LEFT_X);
-
-		//leftFrontMotor = leftX + leftY;
-		//leftBackMotor = leftX + leftY;
-		//rightFrontMotor = leftX - leftY;
-		//rightBackMotor = leftX - leftY;
-
-		setPower(leftY, leftX);
 		
+		setPower(leftY, leftX);
+
 		if(master.get_digital(DIGITAL_R1) == 1){
 			rightIntake = 127;
 			leftIntake = - 127;
