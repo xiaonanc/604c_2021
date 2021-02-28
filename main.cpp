@@ -1,4 +1,4 @@
-//604c_feb
+
 #include "main.h"
 using namespace pros;
 
@@ -76,15 +76,16 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	//intake(1);
-	//drivestraight(80, 2000, 'f' );
+	intake(1);
+driveStraight(2500, 0.015, 35, 46);
+gyro_turn(-900, 0.015, -25, 150);
+driveStraight(1500, 0.015, 25, 46);
+intake(0);
+shoot(1000);
+intake(1);
+//driveStraight(-750, 0.015, -25, 46);
 
-	driveStraight(50, 1260, 'f', 0.1);
-
-//	delay(1000);
-//	intake(0);
-
-
+//driveStraight(4000, 0.015, 25, 46);
 }
 /**
 }
@@ -108,7 +109,7 @@ void opcontrol() {
 
 		int leftY = master.get_analog(ANALOG_LEFT_Y);
 	  int leftX = master.get_analog(ANALOG_LEFT_X);
-		
+
 		setPower(leftY, leftX);
 
 		if(master.get_digital(DIGITAL_R1) == 1){

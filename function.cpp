@@ -56,7 +56,7 @@ void gyro_turn(double target, double kp, double min, double range){
     if(in_range){
       //delta needs to be tuned
       delta = millis() - start_time;
-      if(delta > 250){
+      if(delta > 100){
         exit = true;
       }
     }
