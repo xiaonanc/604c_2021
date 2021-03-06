@@ -37,6 +37,7 @@
 using namespace pros;
 #include "function.hpp"
 #include "base_function.hpp"
+#include "timer.hpp"
 
 
 /**

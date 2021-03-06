@@ -1,4 +1,3 @@
-
 #include "main.h"
 using namespace pros;
 
@@ -76,16 +75,25 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
+	//tuned data
+	//gyro_turn(-900, 0.015, -25, 150);
+	//driveStraight(4000, 0.015, 25, 46);
+	
+	//intake the second ball and score the first goal
 	intake(1);
-driveStraight(2500, 0.015, 35, 46);
-gyro_turn(-900, 0.015, -25, 150);
-driveStraight(1500, 0.015, 25, 46);
-intake(0);
-shoot(1000);
-intake(1);
-//driveStraight(-750, 0.015, -25, 46);
+	driveStraight(2500, 0.015, 35, 46);
+	gyro_turn(-900, 0.015, -25, 150);
+	driveStraight(1500, 0.015, 25, 46);
+	intake(0);
+	shoot(1000);
+	//intake the third ball and score the second goal
 
-//driveStraight(4000, 0.015, 25, 46);
+
+
+
+	//score the third goal
+
+
 }
 /**
 }
