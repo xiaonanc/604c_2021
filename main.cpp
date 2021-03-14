@@ -78,15 +78,31 @@ void autonomous() {
 	//tuned data
 	//gyro_turn(-900, 0.015, -25, 150);
 	//driveStraight(4000, 0.015, 25, 46);
-	
+
 	//intake the second ball and score the first goal
+
 	intake(1);
-	driveStraight(2500, 0.015, 35, 46);
-	gyro_turn(-900, 0.015, -25, 150);
-	driveStraight(1500, 0.015, 25, 46);
+	driveStraight(2500, 0.015, 40, 46);
+	gyro_turn(-900, 0.015, -40, 346);
+	driveStraight(1600, 0.015, 60, 46);
 	intake(0);
-	shoot(1000);
+	shoot(500);
+	intake(2);
+	driveStraight(-1270, 0.015, -60, 46);
+	delay(500);
+	intake(0);
+	gyro_turn(1345, 0.015, 40, 346);
+	intake(1);
+	delay(500);
+	driveStraight(3250, 0.015, 40, 46);
+	intake(0);
+
+	gyro_turn(-900, 0.015, -40, 346);
+	driveStraight(1000, 0.015, 60, 46);
+
 	//intake the third ball and score the second goal
+	shoot(500);
+
 
 
 
